@@ -10,6 +10,7 @@ import {
   faCircleExclamation,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
+import Footer from "./components/Footer";
 
 const App = () => {
   const [movies, setMovies] = useState([]);
@@ -107,6 +108,7 @@ const App = () => {
           />
         </>
       )}
+      <Footer />
     </Container>
   );
 };
