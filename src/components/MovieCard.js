@@ -17,6 +17,7 @@ const PLACEHOLDER_IMAGE = "https://dummyimage.com/260x200/cccccc/555555.png";
 
 const MovieCard = ({ movieId }) => {
   const [movie, setMovie] = useState(null);
+  const [trailer, setTrailer] = useState("");
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -32,6 +33,32 @@ const MovieCard = ({ movieId }) => {
     };
 
     fetchMovieDetails();
+  }, [movieId]);
+
+  useEffect(() => {
+    const fetchMovieTrailer = async () => {
+      try {
+        const { data } = await axios.get(`${BASE_URL}/${movieId}/videos`, {
+          params: { api_key: API_KEY },
+        });
+
+        // Find the trailer video from the results
+        const trailer = data.results.find((video) => video.type === "Trailer");
+
+        // If trailer exists, set the trailer URL, otherwise set an empty string or handle error
+        if (trailer) {
+          const trailerUrl = `https://www.youtube.com/embed/${trailer.key}`;
+          setTrailer(trailerUrl); // Assuming setTrailer is used to set the trailer URL
+        } else {
+          console.error("Trailer not found");
+          setTrailer(""); // or any default value if no trailer found
+        }
+      } catch (error) {
+        console.error("Error fetching movie trailer:", error.message);
+      }
+    };
+
+    fetchMovieTrailer();
   }, [movieId]);
 
   const getMoviePoster = (movie) => {
@@ -84,7 +111,7 @@ const MovieCard = ({ movieId }) => {
             variant="top"
             src={getMoviePoster(movie)}
             alt={movie.title}
-            className="rounded-top"
+            className="rounded-top w-100"
           />
           <Card.Body>
             <Card.Title>{movie.title}</Card.Title>
@@ -117,7 +144,7 @@ const MovieCard = ({ movieId }) => {
       </Col>
 
       {/* Modal for Movie Details */}
-      <Modal show={show} onHide={handleClose} centered>
+      <Modal show={show} onHide={handleClose} centered size="lg">
         <Modal.Header closeButton>
           <Modal.Title>{movie.title}</Modal.Title>
         </Modal.Header>
@@ -125,7 +152,7 @@ const MovieCard = ({ movieId }) => {
           <img
             src={getMoviePoster(movie)}
             alt={movie.title}
-            className="img-fluid rounded mb-3"
+            className="img-fluid rounded mb-3 w-100"
           />
           <p>
             <strong>Khẩu hiệu:</strong> {movie.tagline || "Không có khẩu hiệu."}
@@ -149,6 +176,21 @@ const MovieCard = ({ movieId }) => {
           <p>
             <strong>Ngôn ngữ:</strong> {getLanguage(movie.original_language)}
           </p>
+
+          {/* Trailer Section */}
+          {trailer && (
+            <div className="mb-3">
+              <h5>Trailer:</h5>
+              <iframe
+                width="100%"
+                height="400"
+                src={trailer}
+                title="Movie Trailer"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
