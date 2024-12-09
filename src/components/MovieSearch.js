@@ -37,7 +37,7 @@ const MovieSearch = ({ setSearchQuery, resetMovies }) => {
 
   return (
     <Row className="align-items-center">
-      <Col md={8}>
+      <Col lg={8} md={7} sm={5}>
         <Form>
           <FormControl
             type="text"
@@ -48,7 +48,7 @@ const MovieSearch = ({ setSearchQuery, resetMovies }) => {
           />
         </Form>
       </Col>
-      <Col md={4}>
+      <Col lg={4} md={5} sm={7}>
         <Button
           variant="primary"
           className="me-2"
