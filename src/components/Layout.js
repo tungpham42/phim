@@ -2,7 +2,7 @@ import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import { Container, Navbar, Nav } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilm } from "@fortawesome/free-solid-svg-icons";
+import { faVideo } from "@fortawesome/free-solid-svg-icons";
 import Footer from "./Footer";
 
 const Layout = () => {
@@ -11,7 +11,7 @@ const Layout = () => {
       <Navbar bg="dark" variant="dark" expand="lg" className="mb-3">
         <Container>
           <Navbar.Brand as={Link} to="/">
-            <FontAwesomeIcon icon={faFilm} className="me-2" />
+            <FontAwesomeIcon icon={faVideo} className="me-2" />
             Kho phim
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
