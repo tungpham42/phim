@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleExclamation,
   faSpinner,
+  faTv,
 } from "@fortawesome/free-solid-svg-icons";
 
 const TrendingTvShows = () => {
@@ -80,7 +81,10 @@ const TrendingTvShows = () => {
 
   return (
     <Container>
-      <h2>Phim bộ</h2>
+      <h2>
+        <FontAwesomeIcon icon={faTv} className="me-2" />
+        Phim bộ
+      </h2>
       {renderAlert()}
       {!loading && tvShows.length > 0 && (
         <>

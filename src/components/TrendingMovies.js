@@ -6,6 +6,7 @@ import DefaultPagination from "./DefaultPagination";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleExclamation,
+  faFilm,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -78,7 +79,10 @@ const TrendingMovies = () => {
 
   return (
     <Container>
-      <h2>Phim chiếu rạp</h2>
+      <h2>
+        <FontAwesomeIcon icon={faFilm} className="me-2" />
+        Phim chiếu rạp
+      </h2>
       {renderAlert()}
       {!loading && movies.length > 0 && (
         <>
