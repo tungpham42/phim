@@ -158,7 +158,7 @@ const TvShowCard = ({ tvShowId }) => {
             <strong>Ngày ra mắt:</strong> {tvShow.first_air_date || "N/A"}
           </p>
           <p>
-            <strong>Ngày đóng máy:</strong> {tvShow.last_air_date || "N/A"}
+            <strong>Ngày kết thúc:</strong> {tvShow.last_air_date || "N/A"}
           </p>
           <p>
             <strong>Thể loại:</strong>{" "}
