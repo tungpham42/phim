@@ -185,7 +185,7 @@ const MovieCard = ({ movieId }) => {
                 width="100%"
                 height="400"
                 src={trailer}
-                title="Movie Trailer"
+                title={movie.title}
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
