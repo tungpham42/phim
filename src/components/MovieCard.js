@@ -7,6 +7,8 @@ import {
   faTimes,
   faExternalLinkAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import countries from "../data/countries";
+import languages from "../data/languages";
 import "./MovieCard.css";
 
 const BASE_URL = "https://api.themoviedb.org/3/movie";
@@ -21,10 +23,7 @@ const MovieCard = ({ movieId }) => {
     const fetchMovieDetails = async () => {
       try {
         const { data } = await axios.get(`${BASE_URL}/${movieId}`, {
-          params: {
-            api_key: API_KEY,
-            language: "vi",
-          },
+          params: { api_key: API_KEY, language: "vi" },
         });
         setMovie(data);
       } catch (error) {
@@ -35,12 +34,36 @@ const MovieCard = ({ movieId }) => {
     fetchMovieDetails();
   }, [movieId]);
 
-  const getMoviePoster = () => {
-    return movie?.poster_path
-      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-      : `${PLACEHOLDER_IMAGE}&text=${encodeURIComponent(
-          movie?.title || "Movie"
-        ).replace(/%20/g, "+")}`;
+  const getMoviePoster = (movie) => {
+    if (movie?.poster_path) {
+      return `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+    }
+    return `${PLACEHOLDER_IMAGE}&text=${encodeURIComponent(
+      movie?.title || "Movie"
+    ).replace(/%20/g, "+")}`;
+  };
+
+  const getReleaseYear = (releaseDate) => releaseDate?.split("-")[0] || "N/A";
+
+  const getGenres = (genres) =>
+    genres?.length ? genres.map((genre) => genre.name).join(", ") : "N/A";
+
+  const getCountry = (originCountries) => {
+    const countryNames = originCountries
+      .map((originCountry) => {
+        const country = countries.find((c) => c.code === originCountry);
+        return country ? country.name : originCountry || "N/A";
+      })
+      .filter((name) => name !== "N/A"); // Filter out "N/A" values if any
+
+    return countryNames.length > 1
+      ? countryNames.join(", ")
+      : countryNames[0] || "N/A";
+  };
+
+  const getLanguage = (originalLanguage) => {
+    const language = languages.find((lang) => lang.code === originalLanguage);
+    return language ? language.name : originalLanguage || "N/A";
   };
 
   const handleShow = () => setShow(true);
@@ -59,15 +82,14 @@ const MovieCard = ({ movieId }) => {
         <Card className="h-100 movie-card rounded shadow-lg">
           <Card.Img
             variant="top"
-            src={getMoviePoster()}
+            src={getMoviePoster(movie)}
             alt={movie.title}
             className="rounded-top"
           />
           <Card.Body>
             <Card.Title>{movie.title}</Card.Title>
             <Card.Text>
-              <strong>Năm ra mắt:</strong>{" "}
-              {movie.release_date?.split("-")[0] || "N/A"}
+              <strong>Năm ra mắt:</strong> {getReleaseYear(movie.release_date)}
             </Card.Text>
             <Button
               variant="primary"
@@ -101,33 +123,31 @@ const MovieCard = ({ movieId }) => {
         </Modal.Header>
         <Modal.Body>
           <img
-            src={getMoviePoster()}
+            src={getMoviePoster(movie)}
             alt={movie.title}
             className="img-fluid rounded mb-3"
           />
           <p>
-            <strong>Khẩu hiệu:</strong>{" "}
-            {movie.tagline || "No tagline available."}
+            <strong>Khẩu hiệu:</strong> {movie.tagline || "Không có khẩu hiệu."}
           </p>
           <p>
-            <strong>Tóm tắt:</strong>{" "}
-            {movie.overview || "No description available."}
+            <strong>Tóm tắt:</strong> {movie.overview || "Không có tóm tắt."}
           </p>
           <p>
             <strong>Ngày ra mắt:</strong> {movie.release_date || "N/A"}
           </p>
           <p>
-            <strong>Thể loại:</strong>{" "}
-            {movie.genres?.length
-              ? movie.genres.map((genre) => genre.name).join(", ")
-              : "N/A"}
+            <strong>Thể loại:</strong> {getGenres(movie.genres)}
           </p>
           <p>
             <strong>Đánh giá:</strong> {movie.vote_average} ({movie.vote_count}{" "}
             lượt đánh giá)
           </p>
           <p>
-            <strong>Ngôn ngữ:</strong> {movie.original_language?.toUpperCase()}
+            <strong>Quốc gia:</strong> {getCountry(movie.origin_country)}
+          </p>
+          <p>
+            <strong>Ngôn ngữ:</strong> {getLanguage(movie.original_language)}
           </p>
         </Modal.Body>
         <Modal.Footer>
