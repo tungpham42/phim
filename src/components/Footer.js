@@ -1,7 +1,7 @@
 import { Col, Row } from "react-bootstrap";
 
 const Footer = () => (
-  <footer className="mt-5">
+  <footer className="my-5">
     <Row className="justify-content-center text-center">
       <Col md="auto">
         <a

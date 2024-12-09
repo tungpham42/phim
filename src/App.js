@@ -20,7 +20,8 @@ const App = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
-  const apiKey = "fecb69b9d0ad64dbe0802939fafc338d"; // Replace with your TMDb API key
+  const BASE_URL = "https://api.themoviedb.org/3/search/movie";
+  const API_KEY = "fecb69b9d0ad64dbe0802939fafc338d";
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -30,14 +31,21 @@ const App = () => {
       setError(null);
 
       try {
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/search/movie?query=${searchQuery}&api_key=${apiKey}&page=${currentPage}`
-        );
-        setMovies(response.data.results);
-        setTotalPages(response.data.total_pages);
-      } catch (err) {
-        console.error("Error fetching movie data:", err);
-        setError("Failed to fetch movie data.");
+        const url = `${BASE_URL}`;
+        const { data } = await axios.get(url, {
+          params: {
+            query: searchQuery,
+            api_key: API_KEY,
+            page: currentPage,
+            language: "vi",
+          },
+        });
+
+        setMovies(data.results);
+        setTotalPages(data.total_pages);
+      } catch (error) {
+        console.error("Error fetching movie data:", error);
+        setError(`Failed to fetch movie data: ${error.message}`);
       } finally {
         setLoading(false);
       }
@@ -82,7 +90,7 @@ const App = () => {
   };
 
   const renderMovies = () =>
-    movies.map((movie) => <MovieCard key={movie.id} movie={movie} />);
+    movies.map((movie) => <MovieCard key={movie.id} movieId={movie.id} />);
 
   return (
     <Container>
