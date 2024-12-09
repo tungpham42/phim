@@ -11,7 +11,7 @@ import {
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 
-const TvShows = () => {
+const TvShows = ({ title }) => {
   const [tvShows, setTvShows] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,6 +21,10 @@ const TvShows = () => {
 
   const BASE_URL = "https://api.themoviedb.org/3/search/tv";
   const API_KEY = "fecb69b9d0ad64dbe0802939fafc338d";
+
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
 
   useEffect(() => {
     const fetchTvShows = async () => {

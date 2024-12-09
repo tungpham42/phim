@@ -10,9 +10,15 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="phim-chieu-rap" element={<Movies />} />
-          <Route path="phim-bo" element={<TvShows />} />
+          <Route index element={<Home title="Trang chủ - Kho phim" />} />
+          <Route
+            path="phim-chieu-rap"
+            element={<Movies title="Phim chiếu rạp - Kho phim" />}
+          />
+          <Route
+            path="phim-bo"
+            element={<TvShows title="Phim bộ - Kho phim" />}
+          />
         </Route>
       </Routes>
     </Router>

@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./Home.css";
 
-const Home = () => {
+const Home = ({ title }) => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -19,6 +19,10 @@ const Home = () => {
 
   const BASE_URL = "https://api.themoviedb.org/3/trending/movie/day";
   const API_KEY = "fecb69b9d0ad64dbe0802939fafc338d";
+
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
 
   useEffect(() => {
     const fetchMovies = async () => {
