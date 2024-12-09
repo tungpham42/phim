@@ -8,6 +8,7 @@ import {
   faCircleExclamation,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
+import "./Home.css";
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
