@@ -1,6 +1,6 @@
 import { Pagination } from "react-bootstrap";
 
-const MoviePagination = ({ currentPage, totalPages, onPageChange }) => {
+const DefaultPagination = ({ currentPage, totalPages, onPageChange }) => {
   const visiblePages = 5;
   const startPage = Math.max(1, currentPage - Math.floor(visiblePages / 2));
   const endPage = Math.min(totalPages, startPage + visiblePages - 1);
@@ -40,4 +40,4 @@ const MoviePagination = ({ currentPage, totalPages, onPageChange }) => {
     </Pagination>
   );
 };
-export default MoviePagination;
+export default DefaultPagination;
