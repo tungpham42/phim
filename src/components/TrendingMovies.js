@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { Container, Row, Alert } from "react-bootstrap";
 import MovieCard from "./MovieCard";
 import DefaultPagination from "./DefaultPagination";
@@ -7,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleExclamation,
   faFilm,
+  faListAlt,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -79,10 +81,16 @@ const TrendingMovies = () => {
 
   return (
     <Container>
-      <h2>
-        <FontAwesomeIcon icon={faFilm} className="me-2" />
-        Phim chiếu rạp
-      </h2>
+      <div className="d-flex align-items-center justify-content-between">
+        <h2>
+          <FontAwesomeIcon icon={faFilm} className="me-2" />
+          Phim chiếu rạp
+        </h2>
+        <Link to="/phim-chieu-rap" className="btn btn-primary">
+          <FontAwesomeIcon icon={faListAlt} className="me-2" />
+          Xem tất cả
+        </Link>
+      </div>
       {renderAlert()}
       {!loading && movies.length > 0 && (
         <>
