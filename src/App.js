@@ -11,7 +11,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="phim-rap" element={<Movies />} />
+          <Route path="phim-chieu-rap" element={<Movies />} />
           <Route path="phim-bo" element={<TvShows />} />
         </Route>
       </Routes>
