@@ -88,7 +88,7 @@ const TrendingTvShows = () => {
           <FontAwesomeIcon icon={faTv} className="me-2" />
           Phim bộ
         </h2>
-        <Link to="/phim-chieu-rap" className="btn btn-primary">
+        <Link to="/phim-bo" className="btn btn-primary">
           <FontAwesomeIcon icon={faListAlt} className="me-2" />
           Xem tất cả
         </Link>
