@@ -72,6 +72,14 @@ const MovieCard = ({ movieId }) => {
 
   const getReleaseYear = (releaseDate) => releaseDate?.split("-")[0] || "N/A";
 
+  const formatVietnameseDate = (date) => {
+    return new Intl.DateTimeFormat("vi-VN", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    }).format(new Date(date));
+  };
+
   const getGenres = (genres) =>
     genres?.length ? genres.map((genre) => genre.name).join(", ") : "N/A";
 
@@ -161,7 +169,8 @@ const MovieCard = ({ movieId }) => {
             <strong>Tóm tắt:</strong> {movie.overview || "Không có tóm tắt."}
           </p>
           <p>
-            <strong>Ngày ra mắt:</strong> {movie.release_date || "N/A"}
+            <strong>Ngày ra mắt:</strong>{" "}
+            {formatVietnameseDate(movie.release_date) || "N/A"}
           </p>
           <p>
             <strong>Thể loại:</strong> {getGenres(movie.genres)}

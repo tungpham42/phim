@@ -62,6 +62,14 @@ const TvShowCard = ({ tvShowId }) => {
 
   const getFormattedYear = (date) => date?.split("-")[0] || "N/A";
 
+  const formatVietnameseDate = (date) => {
+    return new Intl.DateTimeFormat("vi-VN", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    }).format(new Date(date));
+  };
+
   const formatList = (list, formatter) =>
     list?.length ? list.map(formatter).join(", ") : "N/A";
 
@@ -155,10 +163,12 @@ const TvShowCard = ({ tvShowId }) => {
             <strong>Tóm tắt:</strong> {tvShow.overview || "Không có tóm tắt."}
           </p>
           <p>
-            <strong>Ngày ra mắt:</strong> {tvShow.first_air_date || "N/A"}
+            <strong>Ngày ra mắt:</strong>{" "}
+            {formatVietnameseDate(tvShow.first_air_date) || "N/A"}
           </p>
           <p>
-            <strong>Ngày kết thúc:</strong> {tvShow.last_air_date || "N/A"}
+            <strong>Ngày kết thúc:</strong>{" "}
+            {formatVietnameseDate(tvShow.last_air_date) || "N/A"}
           </p>
           <p>
             <strong>Thể loại:</strong>{" "}
