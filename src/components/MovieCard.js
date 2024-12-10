@@ -73,11 +73,16 @@ const MovieCard = ({ movieId }) => {
   const getReleaseYear = (releaseDate) => releaseDate?.split("-")[0] || "N/A";
 
   const formatVietnameseDate = (date) => {
+    const parsedDate = new Date(date);
+    if (isNaN(parsedDate)) {
+      console.error("Invalid date:", date);
+      return "Invalid date";
+    }
     return new Intl.DateTimeFormat("vi-VN", {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
-    }).format(new Date(date));
+    }).format(parsedDate);
   };
 
   const getGenres = (genres) =>
