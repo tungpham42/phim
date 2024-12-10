@@ -25,7 +25,7 @@ const Layout = () => {
 
   return (
     <>
-      <Navbar bg="dark" variant="dark" expand="lg" className="mb-3">
+      <Navbar bg="dark" variant="dark" expand="lg" className="mb-5 fixed-top">
         <Container>
           <Navbar.Brand as={Link} to="/">
             <FontAwesomeIcon icon={faVideo} className="me-2" />
@@ -62,7 +62,7 @@ const Layout = () => {
         </Container>
       </Navbar>
 
-      <Container>
+      <Container className="pt-5 mt-5">
         <Outlet /> {/* Renders child routes */}
       </Container>
 
