@@ -10,8 +10,9 @@ import {
   faCircleExclamation,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
+import { Helmet } from "react-helmet";
 
-const TvShows = ({ title }) => {
+const TvShows = ({ headTitle }) => {
   const [tvShows, setTvShows] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,10 +22,6 @@ const TvShows = ({ title }) => {
 
   const BASE_URL = "https://api.themoviedb.org/3/search/tv";
   const API_KEY = "fecb69b9d0ad64dbe0802939fafc338d";
-
-  useEffect(() => {
-    document.title = title;
-  }, [title]);
 
   useEffect(() => {
     const fetchTvShows = async () => {
@@ -99,30 +96,36 @@ const TvShows = ({ title }) => {
     ));
 
   return (
-    <Container>
-      <h1 className="my-4">
-        <FontAwesomeIcon icon={faTv} className="me-2" />
-        Phim bộ
-      </h1>
-      <TvShowSearch
-        setSearchQuery={(query) => {
-          setSearchQuery(query);
-          setCurrentPage(1); // Reset to first page on new search
-        }}
-        resetTvShows={() => setTvShows([])}
-      />
-      {renderAlert()}
-      {!loading && tvShows.length > 0 && (
-        <>
-          <Row className="mt-3">{renderTvShows()}</Row>
-          <DefaultPagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </>
-      )}
-    </Container>
+    <>
+      <Helmet>
+        <title>{headTitle}</title>
+        <meta property="og:title" content={headTitle} />
+      </Helmet>
+      <Container>
+        <h1 className="my-4">
+          <FontAwesomeIcon icon={faTv} className="me-2" />
+          Phim bộ
+        </h1>
+        <TvShowSearch
+          setSearchQuery={(query) => {
+            setSearchQuery(query);
+            setCurrentPage(1); // Reset to first page on new search
+          }}
+          resetTvShows={() => setTvShows([])}
+        />
+        {renderAlert()}
+        {!loading && tvShows.length > 0 && (
+          <>
+            <Row className="mt-3">{renderTvShows()}</Row>
+            <DefaultPagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          </>
+        )}
+      </Container>
+    </>
   );
 };
 

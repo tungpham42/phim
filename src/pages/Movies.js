@@ -10,8 +10,9 @@ import {
   faCircleExclamation,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
+import { Helmet } from "react-helmet";
 
-const Movies = ({ title }) => {
+const Movies = ({ headTitle }) => {
   const [movies, setMovies] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,10 +22,6 @@ const Movies = ({ title }) => {
 
   const BASE_URL = "https://api.themoviedb.org/3/search/movie";
   const API_KEY = "fecb69b9d0ad64dbe0802939fafc338d";
-
-  useEffect(() => {
-    document.title = title;
-  }, [title]);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -96,30 +93,36 @@ const Movies = ({ title }) => {
     movies.map((movie) => <MovieCard key={movie.id} movieId={movie.id} />);
 
   return (
-    <Container>
-      <h1 className="my-4">
-        <FontAwesomeIcon icon={faFilm} className="me-2" />
-        Phim chiếu rạp
-      </h1>
-      <MovieSearch
-        setSearchQuery={(query) => {
-          setSearchQuery(query);
-          setCurrentPage(1); // Reset to first page on new search
-        }}
-        resetMovies={() => setMovies([])}
-      />
-      {renderAlert()}
-      {!loading && movies.length > 0 && (
-        <>
-          <Row className="mt-3">{renderMovies()}</Row>
-          <DefaultPagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </>
-      )}
-    </Container>
+    <>
+      <Helmet>
+        <title>{headTitle}</title>
+        <meta property="og:title" content={headTitle} />
+      </Helmet>
+      <Container>
+        <h1 className="my-4">
+          <FontAwesomeIcon icon={faFilm} className="me-2" />
+          Phim chiếu rạp
+        </h1>
+        <MovieSearch
+          setSearchQuery={(query) => {
+            setSearchQuery(query);
+            setCurrentPage(1); // Reset to first page on new search
+          }}
+          resetMovies={() => setMovies([])}
+        />
+        {renderAlert()}
+        {!loading && movies.length > 0 && (
+          <>
+            <Row className="mt-3">{renderMovies()}</Row>
+            <DefaultPagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          </>
+        )}
+      </Container>
+    </>
   );
 };
 
