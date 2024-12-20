@@ -3,6 +3,7 @@ import axios from "axios";
 import { Container, Row, Alert } from "react-bootstrap";
 import TvShowSearch from "../components/TvShowSearch";
 import TvShowCard from "../components/TvShowCard";
+import AllTvShows from "../components/AllTvShows";
 import DefaultPagination from "../components/DefaultPagination";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -114,14 +115,20 @@ const TvShows = ({ headTitle }) => {
           resetTvShows={() => setTvShows([])}
         />
         {renderAlert()}
-        {!loading && tvShows.length > 0 && (
+        {!loading && (
           <>
-            <Row className="mt-3">{renderTvShows()}</Row>
-            <DefaultPagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
+            {tvShows.length > 0 ? (
+              <>
+                <Row className="mt-3">{renderTvShows()}</Row>
+                <DefaultPagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                />
+              </>
+            ) : (
+              <AllTvShows />
+            )}
           </>
         )}
       </Container>
